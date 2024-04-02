@@ -19,6 +19,10 @@ import uvicorn
 import re
 import joblib
 
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+
 from fastapi.responses import RedirectResponse
 from database import fetch_food_data_from_mongodb
 
@@ -75,15 +79,22 @@ def apply_pipeline(model_pipeline,_input,extracted_data):
 # Initialize FastAPI
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "../frontend")), name="static")
-templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "../frontend/templates"))
+# Define the origins that are allowed to make cross-origin requests
+origins = [
+    "http://localhost:3000", # React app
+    "http://localhost:8000", # FastAPI app
+    "mongodb://localhost:27017/", # MongoDB
+    "http://localhost"
+]
 
-
-# Define a route to render the index.html template
-@app.get("/", response_class=HTMLResponse)
-async def read_index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
+# Add CORS middleware to the FastAPI app
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Define request body model
 class UserInput(BaseModel):
@@ -143,7 +154,7 @@ async def fetch_food_details(food: str):
     # Convert ObjectId to string
     if '_id' in details:
         details['_id'] = str(details['_id'])
-    
+
     return details
 
 
