@@ -1,4 +1,5 @@
 import os
+import pickle
 from bson import ObjectId
 from fastapi import Request
 from fastapi.responses import JSONResponse
@@ -11,9 +12,11 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-from sklearn.neighbors import NearestNeighbors
-from sklearn.preprocessing import FunctionTransformer
+from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import FunctionTransformer
 import numpy as np
 import uvicorn
 import re
@@ -22,6 +25,11 @@ import joblib
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
+import pickle
 
 from fastapi.responses import RedirectResponse
 from database import fetch_food_data_from_mongodb
@@ -34,47 +42,79 @@ mongodb_collection = "food_collection"
 # Load dataset
 df = pd.read_csv('../data/dataset.csv')
 
-# Preprocessing functions
-def scaler_operation(dataframe):
-    # Drop rows with missing values
-    dataframe.dropna(inplace=True)
-    scaler = StandardScaler()
-    data_prep = scaler.fit_transform(dataframe.iloc[:, 4:10].to_numpy())
-    return data_prep, scaler
+# Preprocessing: Convert 'food' column to a single string per row
+df['food'] = df['food'].apply(lambda x: ' '.join(str(x).split()))
+
+import joblib
+
+# # Load the vectorizer and kmeans models
+# vectorizer = joblib.load('../vectorizer.pkl')
+# kmeans = joblib.load('../kmeans.pkl')
 
 
-# Perform Nearest Neighbours clustering
-def nn_clustering(data_prep):
-    nearest_neighbours = NearestNeighbors(metric='cosine', algorithm='brute') # Use cosine similarity as the metric 
-    nearest_neighbours.fit(data_prep)
-    return nearest_neighbours
+# Vectorize the 'food' column
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(df['food'])
 
-# Build a pipeline which includes the scaler and nearest neighbours model
-def build_pipeline(nearest_neighbours, scaler, var):
-    transformer = FunctionTransformer(nearest_neighbours.kneighbors, kw_args=var)
-    model_pipeline = Pipeline([('std_scaler', scaler), ('NN', transformer)])
-    return model_pipeline
+# Clustering with KMeans
+kmeans = KMeans(n_clusters=5, random_state=2).fit(X)
 
-# Extract data based on user input
-def extract_data(dataframe,ingredients):
-    extracted_data=dataframe.copy()
-    extracted_data['food_type'] = extracted_data['food_type'].apply(lambda x: 1 if x == 'Non-Veg' else 0)
-    for column in extracted_data.columns[4:10]:
-        extracted_data[column] = pd.to_numeric(extracted_data[column], errors='coerce')
-    extracted_data=extract_ingredient_filtered_data(extracted_data,ingredients)
-    return extracted_data
+# The labels_ attribute contains the cluster assignments for each food item
+df['food_cluster'] = kmeans.labels_
 
-# Filter data based on ingredients
-def extract_ingredient_filtered_data(dataframe,ingredients):
-    extracted_data=dataframe.copy()
-    regex_string=''.join(map(lambda x:f'(?=.*{x})',ingredients))
-    extracted_data=extracted_data[extracted_data['ingredients'].str.contains(regex_string,regex=True,flags=re.IGNORECASE)]
-    return extracted_data
 
-# Apply the pipeline to the input data
-def apply_pipeline(model_pipeline,_input,extracted_data):
-    _input=np.array(_input).reshape(1,-1)
-    return extracted_data.iloc[model_pipeline.transform(_input)[0]]
+# Vectorize the 'food' column
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(df['food'])
+
+# Clustering with KMeans
+kmeans = KMeans(n_clusters=5, random_state=2).fit(X)
+
+
+# Reduce dimensionality to 2D for visualization
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X.toarray())
+
+# Function to preprocess input criteria
+def preprocess_input(food_type, calories, fat_content, protein_content, gluten_free, dairy_free):
+    gluten_free = 'True' if gluten_free else 'False'
+    dairy_free = 'True' if dairy_free else 'False'
+    input_string = f"{food_type} {calories} {fat_content} {protein_content} {gluten_free} {dairy_free}"
+    print(f"Input string: {input_string}")  # Add this print statement
+    return input_string
+
+# Function to find cluster based on input criteria
+def find_cluster(input_string, vectorizer, kmeans):
+    input_vector = vectorizer.transform([input_string])
+    cluster = kmeans.predict(input_vector)[0]
+    print(f"Cluster found for input: {cluster}")  # Add this print statement
+    return cluster
+
+
+# Function to recommend food items from the same cluster
+def recommend_food_by_cluster(df, cluster, num_recommendations=5):
+    similar_food_items = df[df['food_cluster'] == cluster]
+    print(f"Similar food items in cluster {cluster}: {similar_food_items}")  # Add this print statement
+    recommendations = similar_food_items.sample(n=num_recommendations)
+    return recommendations
+
+
+def recommend_food(df, vectorizer, kmeans, food_type, calories, fat_content, protein_content, gluten_free, dairy_free, ingredients, num_recommendations=5):
+    input_string = preprocess_input(food_type, calories, fat_content, protein_content, gluten_free, dairy_free)
+    cluster = find_cluster(input_string, vectorizer, kmeans)
+    similar_food_items = df[df['food_cluster'] == cluster]
+    
+    # Filter based on ingredients
+    filtered_items = similar_food_items[similar_food_items['ingredients'].apply(lambda x: all(ingredient in x.lower() for ingredient in ingredients))]
+    
+    if len(filtered_items) < num_recommendations:
+        print("Not enough items in the cluster matching the criteria.")
+        return filtered_items
+    else:
+        recommendations = filtered_items.sample(n=num_recommendations, replace=False)  # Sampling without replacement
+        return recommendations
+
+
 
 # Initialize FastAPI
 app = FastAPI()
@@ -109,42 +149,15 @@ class UserInput(BaseModel):
 # Define a route to recommend food items based on user input
 @app.post("/recommend/")
 async def recommend_food_item(user_input: UserInput):
-    # Preprocess user input
-    extracted_data = extract_data(df, user_input.ingredients)
+    input_string = preprocess_input(user_input.food_type, user_input.calories, user_input.fat_content, user_input.protein_content, 'Gluten' in user_input.allergies, 'Dairy' in user_input.allergies)
+    cluster = find_cluster(input_string, vectorizer, kmeans)
     
-    # Define var dictionary with default value for n_neighbors
-    var = {'n_neighbors': 5, 'return_distance': False}
+    # Pass the ingredients list to the recommend_food function
+    recommendations = recommend_food(df, vectorizer, kmeans, user_input.food_type, user_input.calories, user_input.fat_content, user_input.protein_content, 'Gluten' in user_input.allergies, 'Dairy' in user_input.allergies, user_input.ingredients, num_recommendations=5)
     
-    # Check if the extracted data has enough items to recommend
-    if extracted_data.shape[0] >= var['n_neighbors']:
-        data_prep, scaler = scaler_operation(extracted_data)
-        nearest_neighbours = nn_clustering(data_prep)
-        model_pipeline = build_pipeline(nearest_neighbours, scaler, var)
-        
-        # Prepare user input
-        input_data = pd.DataFrame({
-            'food_type': [1 if user_input.food_type.lower() == 'non-veg' else 0],
-            'glutenFree': 1 if 'glutenFree' in user_input.allergies else 0,
-            'dairyFree': 1 if 'dairyFree' in user_input.allergies else 0,
-            'Calories': [user_input.calories],
-            'FatContent': [user_input.fat_content],
-            'ProteinContent': [user_input.protein_content]
-        })
-        
-        # Apply the pipeline to the input data
-        apply_pipeline(model_pipeline, input_data, extracted_data)
-        
-        # Apply model_pipeline and get recommendations
-        recommended_indices = model_pipeline.transform(input_data)[0]
-        recommended_items = extracted_data.iloc[recommended_indices]
+    response_data = [{'id': idx, 'food': food} for idx, food in zip(recommendations.index, recommendations['food'])]
+    return JSONResponse(content=response_data)
 
-        # Prepare response in the expected format
-        response_data = [{'id': idx, 'food': food} for idx, food in zip(recommended_items['id'], recommended_items['food'])]
-
-        # Return the response
-        return JSONResponse(content=response_data)
-    else:
-        raise HTTPException(status_code=404, detail="No items found with the given ingredients")
 
 # Define a route to fetch food details based on food name
 @app.get("/fetch-food-details/")
@@ -160,10 +173,4 @@ async def fetch_food_details(food: str):
 
 # Run the FastAPI application with Uvicorn
 if __name__ == "__main__":
-    extracted_data = extract_data(df, [])
-    data_prep, scaler = scaler_operation(extracted_data)
-    nearest_neighbours = nn_clustering(data_prep)
-    var = {'return_distance': False}
-    model_pipeline = build_pipeline(nearest_neighbours, scaler, var)
-    
     uvicorn.run(app, host="0.0.0.0", port=8000)
