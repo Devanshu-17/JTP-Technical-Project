@@ -15,7 +15,7 @@ const Hero = () => {
                      <h2 class="hero__title">Foodinator</h2>
                      <p class="hero__text">Your Personalised Food Recommendation Assistant</p>
                      <div class="hero__btns">
-                         <a href="https://github.com/Devanshu-17/JTP-Technical-Project" class="hero__btn"><span>Explore</span></a>
+                         <a href="https://github.com/Devanshu-17/JTP-Technical-Project" class="hero__btn"><span>Explore Docs</span></a>
                         <Link to="/recommend" className="hero__btn hero__btn--nephrite">
                             <button type="button">
                                 <span>Get Started</span>
