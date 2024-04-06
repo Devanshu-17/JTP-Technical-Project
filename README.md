@@ -14,6 +14,7 @@ This project was developed as part of the Technical Project Round for JTP (Japan
   - [Installation](#installation)
   - [API Documentation](#api-documentation)
 - [Usage](#usage)
+- [Implementation](#demo)
 - [License](#license)
 
 ## Introduction
@@ -112,6 +113,17 @@ The API documentation can be accessed by going to `http://localhost:8000/docs`.
 4. Click on the "Recommend" button to get food recommendations based on your preferences.
 
 5. The system will display a list of recommended food items along with detailed information about each food item.
+
+## Implementation
+
+#### Home Page
+![Home](https://github.com/Devanshu-17/JTP-Technical-Project/assets/93381397/7031c2ba-5651-45dc-8af8-46750a4e227e)
+
+#### Recommendation Page
+![Recommendation](https://github.com/Devanshu-17/JTP-Technical-Project/assets/93381397/35d64050-c666-4c9d-b17f-e8f169b95894)
+
+#### Output Page
+![Output](https://github.com/Devanshu-17/JTP-Technical-Project/assets/93381397/fe71e4cf-1320-4628-8fd8-86501cf2cab9)
 
 ## License
 
