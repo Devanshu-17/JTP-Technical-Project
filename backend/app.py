@@ -1,5 +1,4 @@
 import os
-import pickle
 from bson import ObjectId
 from fastapi import Request
 from fastapi.responses import JSONResponse
@@ -32,15 +31,21 @@ from sklearn.decomposition import PCA
 import pickle
 
 from fastapi.responses import RedirectResponse
-from database import fetch_food_data_from_mongodb
+from database import save_dataset_to_mongodb, fetch_food_data_from_mongodb
 
 # Add MongoDB connection details
-mongodb_url = "mongodb://localhost:27017/"
-mongodb_database = "food_database"
+mongodb_url = os.getenv("MONGODB_URL", "mongodb://localhost:27017/")
+mongodb_database = os.getenv("MONGODB_DATABASE", "food_database")
 mongodb_collection = "food_collection"
 
 # Load dataset
-df = pd.read_csv('../data/dataset.csv')
+df = pd.read_csv('dataset.csv')
+
+mongo_data = "dataset.csv"
+
+# Save the dataset to MongoDB
+save_dataset_to_mongodb(mongo_data, mongodb_url, mongodb_database, mongodb_collection)
+
 
 # Preprocessing: Convert 'food' column to a single string per row
 df['food'] = df['food'].apply(lambda x: ' '.join(str(x).split()))
