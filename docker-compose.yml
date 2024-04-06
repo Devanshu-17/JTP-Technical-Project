@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend/
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "127.0.0.1:8000:8000"
+    expose:
+      - 8000
+    environment:
+      - MONGODB_URL=mongodb://mongo:27017
+      - MONGODB_DATABASE=food_database
+    depends_on:
+      - mongo
+
+  frontend:
+    env_file:
+      - frontend/.env
+    build:
+      context: ./frontend/
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "127.0.0.1:3000:3000"
+    expose:
+      - 3000
+
+  mongo:
+    image: mongo:4.4
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=admin
+    #   - MONGO_INITDB_ROOT_PASSWORD=password
+
+volumes:
+  mongo-data:
