@@ -20,7 +20,6 @@ const Header = () => {
                         </Link>
                         <span className="header__tagline">Foodinator <br /> 🍔🍟 </span>
                         <ul className="header__nav" id="header__nav">
-                            {/* Navigation items can be added here */}
                         </ul>
                         <Link to="/recommend" className="header__cta">
                             <button type="button">

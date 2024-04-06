@@ -15,13 +15,11 @@ const HeaderBack = () => {
                             <span></span>
                             <span></span>
                         </button>
-                        {/* Corrected usage of Link */}
                         <Link to="/recommend" className="header__logo">
                             <img src={logo} alt="Logo" />
                         </Link>
                         <span className="header__tagline">Foodinator <br /> 🍔🍟 </span>
                         <ul className="header__nav" id="header__nav">
-                            {/* Navigation items can be added here */}
                         </ul>
                         <Link to="/" className="header__cta">
                             <button type="button">
