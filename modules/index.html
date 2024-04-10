@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+        <title>Modules - Foodinator</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        
+        
+        
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="../assets/css/darcula-highlight.min.css">
+
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/dracula-ui.min.css">
+        <link rel="stylesheet" href="../assets/css/mkdocs.min.css">
+
+        
+            <link  rel="icon" type="image/x-icon" href="../assets/img/favicon.ico">
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+                <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body class="drac-bg-black-secondary drac-text-grey-ternary drac-text drac-scrollbar-purple">
+
+    <main class="d-flex">
+
+        <!-- block sidebar -->
+            <nav id="sidebar" class="sidebar drac-bg-black">
+    <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Menu</span>
+        </button>
+    </div>
+
+    <div class="p-4">
+        
+
+        <div class="drac-text-center">
+            
+                <span class="drac-text drac-line-height drac-text-white">Foodinator</span>
+            
+        </div>
+
+        <div class="drac-box flex-column">
+            <ul class="dot-ul">
+                <li><div class="dot-li drac-bg-cyan"></div></li>
+                <li><div class="dot-li drac-bg-green"></div></li>
+                <li><div class="dot-li drac-bg-orange"></div></li>
+                <li><div class="dot-li drac-bg-pink"></div></li>
+                <li><div class="dot-li drac-bg-purple"></div></li>
+                <li><div class="dot-li drac-bg-red"></div></li>
+                <li><div class="dot-li drac-bg-yellow"></div></li>
+            </ul>
+        </div>
+
+        <hr class="drac-divider" />
+
+        <!-- block menu -->
+        <ul class="mb-5 drac-list drac-list-none">
+            
+            <li class="drac-box">
+                <a href=".."
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Home
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../installation/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Installation
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../usage/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Usage
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="./"
+                    class=" active 
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Modules
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../api_docs/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    API Docs
+                </a>
+            </li>
+        </ul>
+        <!-- endblock -->
+    </div>
+</nav>
+        <!-- endblock -->
+
+        <nav class="divider drac-bg-purple-cyan"></nav>
+
+        <div class="content">
+            <!-- block header -->
+                <header>
+    <nav class="navbar navbar-expand-xl drac-bg-purple">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler w-100 text-center" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsMenu"
+                aria-controls="navbarsMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse flex-column ml-auto" id="navbarsMenu">
+                <ul class="navbar-nav text-md-center">
+
+                    <!-- block preview -->
+                    <li class="nav-item">
+                            
+        <div class="container">
+            <div class="row row-preview">
+                <div class="col">
+                    <a href="../usage/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="../api_docs/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block search -->
+                    <li class="nav-item"><div role="search" class="search-box">
+	<form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+		<input type="text" name="q" class="drac-input drac-input-search drac-input-white drac-text-white drac-bg-black-secondary"
+		placeholder="Search docs" title="Type search term here" />
+	</form>
+</div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block source -->
+                    <li class="nav-item">
+                        
+                    </li>
+                    <!--  endblock -->
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+</header>
+            <!-- endblock -->
+
+            <!-- block content -->
+                <section class="p-md-5 section-content">
+    <article>
+        <p><h1 id="modules">Modules</h1>
+<h2 id="overview">Overview</h2>
+<p><code>app.py</code> is the core script of the Foodinator application. This script initializes the FastAPI application, sets up the database connection, preprocesses the dataset, and defines the API endpoints for food recommendation and fetching food details.</p>
+<p><code>database.py</code> provides functions for interacting with MongoDB. It includes functions to save the dataset to MongoDB and fetch food data from MongoDB.</p>
+<h2 id="1-databasepy"><strong>1.</strong> <code>database.py</code></h2>
+<p>This module provides functions for interacting with MongoDB.</p>
+<ul>
+<li>
+<h5 id="save_dataset_to_mongodb"><code>save_dataset_to_mongodb</code></h5>
+</li>
+</ul>
+<pre><code class="language-python">def save_dataset_to_mongodb(data_file, mongodb_url, mongodb_database, mongodb_collection):
+    &quot;&quot;&quot;
+    Saves a dataset to MongoDB.
+
+    Args:
+        data_file (str): Path to the dataset file.
+        mongodb_url (str): URL of the MongoDB server.
+        mongodb_database (str): Name of the MongoDB database.
+        mongodb_collection (str): Name of the MongoDB collection.
+
+    Returns:
+        None
+    &quot;&quot;&quot;
+</code></pre>
+<p>This function saves the dataset to MongoDB. It takes the path to the dataset file, MongoDB URL, database name, and collection name as input.</p>
+<pre><code class="language-python">#Example:  
+save_dataset_to_mongodb(&quot;food_dataset.csv&quot;, &quot;mongodb://localhost:27017&quot;, &quot;food_database&quot;, &quot;food_collection&quot;)
+</code></pre>
+<ul>
+<li>
+<h5 id="fetch_food_data_from_mongodb"><code>fetch_food_data_from_mongodb</code></h5>
+</li>
+</ul>
+<pre><code class="language-python">def fetch_food_data_from_mongodb(food_name, mongodb_url, mongodb_database, mongodb_collection):
+    &quot;&quot;&quot;
+    Fetches food data from MongoDB based on the food name.
+
+    Args:
+        food_name (str): Name of the food item.
+        mongodb_url (str): URL of the MongoDB server.
+        mongodb_database (str): Name of the MongoDB database.
+        mongodb_collection (str): Name of the MongoDB collection.
+
+    Returns:
+        dict: Food details retrieved from MongoDB.
+    &quot;&quot;&quot;
+</code></pre>
+<p>This function fetches food data from MongoDB based on the food name. It takes the food name, MongoDB URL, database name, and collection name as input.</p>
+<p>And return the food details as a dictionary.</p>
+<pre><code class="language-python"># Example:  
+fetch_food_data_from_mongodb(&quot;Pizza&quot;, &quot;mongodb://localhost:27017&quot;, &quot;food_database&quot;, &quot;food_collection&quot;)
+</code></pre>
+<h2 id="2-apppy"><strong>2.</strong> <code>app.py</code></h2>
+<p>This module defines the FastAPI application and its endpoints.</p>
+<ul>
+<li>
+<h5 id="preprocess_input"><code>preprocess_input</code></h5>
+</li>
+</ul>
+<pre><code class="language-python">def preprocess_input(food_type, calories, fat_content, protein_content, gluten_free, dairy_free):
+    &quot;&quot;&quot;
+    Preprocesses input criteria for recommending food items.
+
+    Args:
+        food_type (str): Type of food item.
+        calories (int): Number of calories.
+        fat_content (int): Amount of fat in grams.
+        protein_content (int): Amount of protein in grams.
+        gluten_free (bool): Whether the food item is gluten-free.
+        dairy_free (bool): Whether the food item is dairy-free.
+
+    Returns:
+        str: Preprocessed input string.
+    &quot;&quot;&quot;
+</code></pre>
+<p>This function preprocesses the input criteria for recommending food items. It takes the food type, calories, fat content, protein content, gluten-free status, and dairy-free status as input.</p>
+<pre><code class="language-python"># Example:
+preprocess_input(&quot;Pizza&quot;, 300, 15, 10, True, False)
+</code></pre>
+<p>And return the preprocessed input string.</p>
+<ul>
+<li>
+<h5 id="find_cluster"><code>find_cluster</code></h5>
+</li>
+</ul>
+<pre><code class="language-python">def find_cluster(input_string, vectorizer, kmeans):
+    &quot;&quot;&quot;
+    Finds the cluster number based on input criteria.
+
+    Args:
+        input_string (str): Preprocessed input string.
+        vectorizer (TfidfVectorizer): Fitted TfidfVectorizer object.
+        kmeans (KMeans): Fitted KMeans object.
+
+    Returns:
+        int: Cluster number.
+    &quot;&quot;&quot;
+</code></pre>
+<p>This function finds the cluster number based on the input criteria. It takes the preprocessed input string, fitted TfidfVectorizer object, and fitted KMeans object as input.</p>
+<pre><code class="language-python"># Example:
+find_cluster(&quot;Pizza 300 15 10 True False&quot;, vectorizer, kmeans)
+</code></pre>
+<p>And return the cluster number.</p>
+<ul>
+<li>
+<h5 id="recommend_food_by_cluster"><code>recommend_food_by_cluster</code></h5>
+</li>
+</ul>
+<pre><code class="language-python">def recommend_food_by_cluster(df, cluster, num_recommendations=5):
+    &quot;&quot;&quot;
+    Recommends food items from the same cluster
+
+    Args:
+        df (pd.DataFrame): DataFrame containing food items
+        cluster (int): Cluster number
+        num_recommendations (int): Number of recommendations to return
+
+    Returns:
+        pd.DataFrame: Recommended food items
+    &quot;&quot;&quot;
+</code></pre>
+<p>This function recommends food items from the same cluster. It takes the DataFrame containing food items, cluster number, and number of recommendations as input.</p>
+<pre><code class="language-python"># Example:
+recommend_food_by_cluster(df, 0, 5)
+</code></pre>
+<p>And return the recommended food items.</p>
+<ul>
+<li>
+<h5 id="recommend_food"><code>recommend_food</code></h5>
+</li>
+</ul>
+<pre><code class="language-python">def recommend_food(df, vectorizer, kmeans, food_type, calories, fat_content, protein_content, gluten_free, dairy_free, ingredients, num_recommendations=5):
+    &quot;&quot;&quot;
+    Recommends food items based on user input
+
+    Args:
+        df (pd.DataFrame): DataFrame containing food items
+        vectorizer (TfidfVectorizer): Fitted TfidfVectorizer object
+        kmeans (KMeans): Fitted KMeans object
+        food_type (str): Type of food item
+        calories (int): Number of calories
+        fat_content (int): Amount of fat in grams
+        protein_content (int): Amount of protein in grams
+        gluten_free (bool): Whether the food item is gluten-free
+        dairy_free (bool): Whether the food item is dairy-free
+        ingredients (list): List of ingredients to filter by
+        num_recommendations (int): Number of recommendations to return
+
+    Returns:
+        pd.DataFrame: Recommended food items
+    &quot;&quot;&quot;
+</code></pre>
+<p>This function recommends food items based on user input. It takes the DataFrame containing food items, fitted TfidfVectorizer object, fitted KMeans object, food type, calories, fat content, protein content, gluten-free status, dairy-free status, ingredients, and number of recommendations as input.</p>
+<pre><code class="language-python"># Example:
+recommend_food(df, vectorizer, kmeans, &quot;Pizza&quot;, 300, 15, 10, True, False, [&quot;cheese&quot;, &quot;tomato&quot;], 5)
+</code></pre>
+<p>And return the recommended food items.</p>
+<h3 id="request_body"><code>request_body</code></h3>
+<pre><code class="language-python"># Define request body model
+class UserInput(BaseModel):
+    &quot;&quot;&quot;
+    Request body for recommending food items
+    &quot;&quot;&quot;
+    food_type: str
+    allergies: list
+    ingredients: list
+    calories: int = None
+    fat_content: int = None
+    protein_content: int = None
+</code></pre>
+<p>This class defines the request body model for recommending food items. It includes the food type, allergies, ingredients, calories, fat content, and protein content.</p>
+<ul>
+<li>
+<h5 id="recommend_food_by_search"><code>recommend_food_by_search</code></h5>
+</li>
+</ul>
+<pre><code class="language-python">def recommend_food_by_search(food_name, df, cosine_sim):
+    &quot;&quot;&quot;
+    Recommends food items based on a search query
+
+    Args:
+        food_name (str): Food item to search for
+        df (pd.DataFrame): DataFrame containing food items
+        cosine_sim (np.array): Cosine similarity matrix
+
+    Returns:
+        list: Top 5 recommended food items
+    &quot;&quot;&quot;
+</code></pre>
+<p>This function recommends food items based on a search query. It takes the food name, DataFrame containing food items, and cosine similarity matrix as input.</p>
+<pre><code class="language-python"># Example:
+recommend_food_by_search(&quot;Pizza&quot;, df, cosine_sim)
+</code></pre>
+<p>And return the top 5 recommended food items.</p></p>
+    </article>
+</section>
+            <!-- endblock -->
+
+            <!-- block footer -->
+                <footer>
+    <div class="d-flex flex-sm-row justify-content-between py-2 border-top drac-text-black drac-bg-cyan-green">
+        <a href="https://github.com/dracula/mkdocs" target="_blank" style="padding-left: 1%;"
+            class="footer-text drac-anchor drac-text-black drac-text-purple--hover">
+            Made with Dracula Theme for MkDocs
+        </a>
+    </div>
+</footer>
+            <!-- endblock -->
+        </div>
+
+    </main>
+
+        <script>var base_url = '..';</script>
+        <script src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/js/mkdocs.js"></script>
+			<script src="../search/main.js" defer></script>
+
+</body>
+
+</html>
