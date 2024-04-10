@@ -8,6 +8,7 @@ import './styles/bootstrap.min.css';
 import './styles/main.css';
 import './styles/recommend.css';
 import './styles/output.css'; 
+import './styles/FloatingSearchButton.css'; 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

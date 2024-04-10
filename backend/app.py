@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from sklearn.metrics.pairwise import cosine_similarity
 
 from multiprocessing import context
 from fastapi import FastAPI, HTTPException
@@ -175,7 +176,41 @@ async def fetch_food_details(food: str):
 
     return details
 
+# Calculate the cosine similarity matrix
+cosine_sim = cosine_similarity(X, X)
 
+def recommend_food_by_search(food_name, df, cosine_sim):
+    # Convert the input food name to lowercase
+    food_name_lower = food_name.lower()
+    
+    # Find the index of the closest matching food item
+    idx = df[df['food'].str.lower().str.contains(food_name_lower)].index[0]
+    
+    # Get the pairwise similarity scores with other food items
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    
+    # Sort the food items based on the similarity scores
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    
+    # Get the scores of the 5 most similar food items
+    sim_scores = sim_scores[1:6]
+    
+    # Get the food indices
+    food_indices = [i[0] for i in sim_scores]
+    
+    # Return the top 5 most similar food items along with their IDs
+    return [(df.iloc[idx]['food'], df.index[idx]) for idx in food_indices]
+
+# Add a new API endpoint for food search
+@app.post("/food_search/")
+async def food_search(food_name: str):
+    try:
+        recommendations = recommend_food_by_search(food_name, df, cosine_sim)
+        response_data = [{'id': item[1], 'food': item[0]} for item in recommendations]
+        return JSONResponse(content=response_data)
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=f"Food item '{food_name}' not found.")
+    
 # Run the FastAPI application with Uvicorn
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

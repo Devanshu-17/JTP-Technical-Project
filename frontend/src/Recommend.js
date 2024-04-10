@@ -8,9 +8,12 @@ import HealthSliders from './Recommend/HealthSliders';
 import IngredientInput from './Recommend/IngredientInput';
 import SubmitButton from './Recommend/SubmitButton';
 import { useNavigate } from 'react-router-dom';
+import FloatingSearchButton from './FloatingSearchButton'; // Import the FloatingSearchButton component
+
 
 
 function Recommend() {
+ const [isSearchActive, setIsSearchActive] = useState(false); // Moved state here
  const [foodType, setFoodType] = useState('');
  const [allergies, setAllergies] = useState([]);
  const [healthPreferences, setHealthPreferences] = useState({ carbohydrate: 50, protein: 50, fat: 50 });
@@ -107,13 +110,18 @@ function Recommend() {
 
 
 return (
-    <div>
-      <HeaderBack />
-      <FoodTypeCards onFoodTypeChange={handleFoodTypeChange} />
-      <AllergyCards onAllergyChange={handleAllergyChange} />
-      <HealthSliders onSliderChange={handleSliderChange} />
-      <IngredientInput onIngredientChange={handleIngredientChange} />
-      <SubmitButton onClick={handleSubmit} />
+  <div>
+    <HeaderBack />
+    <FloatingSearchButton isSearchActive={isSearchActive} setIsSearchActive={setIsSearchActive} /> {/* Pass state as props */}
+    {!isSearchActive && (
+      <>
+        <FoodTypeCards onFoodTypeChange={handleFoodTypeChange} />
+        <AllergyCards onAllergyChange={handleAllergyChange} />
+        <HealthSliders onSliderChange={handleSliderChange} />
+        <IngredientInput onIngredientChange={handleIngredientChange} />
+        <SubmitButton onClick={handleSubmit} />
+      </>
+    )}
       {errorMessage && (
         <div className="col-sm-12" style={{ display: 'block' }}>
           <div className="alert fade alert-simple alert-danger alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show" role="alert">

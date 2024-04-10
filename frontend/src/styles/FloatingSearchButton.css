@@ -1,0 +1,133 @@
+/* src/styles/FloatingSearchButton.css */
+body.search-active {
+  overflow: hidden;
+}
+
+.control {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
+}
+
+.btn-material {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  background: #e91e63;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+
+.btn-material:hover {
+  cursor: pointer;
+}
+
+/* Adjustments for the search icon */
+.icon-material-search {
+  color: #FFF;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  visibility: visible; /* Ensure the search icon is visible by default */
+}
+
+.search-active .icon-material-search {
+  opacity: 0;
+  visibility: hidden; /* Hide the search icon when search is active */
+}
+
+.search-input {
+  height: 80px;
+  position: absolute;
+  top: 50%;
+  left: 50px;
+  margin-top: 0px;
+  pointer-events: none;
+  opacity: 0; 
+  background-color: rgba(255, 255, 255, 0.1); /* Transparent white background */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Box shadow for glassy effect */
+  border-radius: 50px; /* Rounded corners */
+  backdrop-filter: blur(10px); /* Apply blur effect for glassy appearance */
+  /* transition: all 0.3s ease-in-out; */
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+
+}
+
+.search-input input {
+  color: #a011e8;
+  font-size: 54px;
+  border: 0;
+  background: transparent;
+  box-sizing: border-box;
+  outline: none; /* Remove outline */
+  font-weight: 200;
+  width: calc(100% - 20px); /* Adjust width to leave space for padding */
+  padding: 10px; /* Add padding for spacing inside the input */
+  text-align: center; /* Center text horizontally */
+}
+
+.icon-close {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  color: #FFF; /* Set the color to white */
+  cursor: pointer;
+  font-size: 70px;
+  opacity: 0;
+  visibility: hidden; /* Hide the close icon by default */
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  z-index: 10000; /* Ensure this is higher than the search input's z-index */
+}
+
+.search-active .icon-close {
+  opacity: 1;
+  visibility: visible; /* Show the close icon when search is active */
+  transform: rotate(-90deg);
+  right: 0;
+}
+
+/* src/styles/FloatingSearchButton.css */
+.search-active .search-input {
+  width: 100vw; /* Cover the full viewport width */
+  height: 100vh; /* Cover the full viewport height */
+  top: 0; /* Align to the top of the viewport */
+  left: 0; /* Align to the left of the viewport */
+  z-index: 9999; /* Ensure this is higher than other elements */
+  pointer-events: auto; /* Allows interaction with the search input */
+  opacity: 1;
+  /* pointer-events: all; */
+  transform: none;
+}
+
+
+/* Add this to your FloatingSearchButton.css or a similar CSS file */
+.alert {
+  position: fixed; /* Make it positioned relative to the viewport */
+  top: 20px; /* Adjust the position as needed */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center horizontally */
+  z-index: 10000; /* Ensure it's above other elements */
+  width: 80%; /* Adjust the width as needed */
+  max-width: 400px; /* Maximum width */
+  padding: 20px; /* Padding around the text */
+  background-color: #f8d7da; /* Background color */
+  color: #721c24; /* Text color */
+  border: 1px solid #f5c6cb; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+/* Ensure the close button is visible and accessible */
+.alert .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
