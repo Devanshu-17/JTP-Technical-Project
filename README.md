@@ -122,6 +122,9 @@ The API documentation can be accessed by going to `http://localhost:8000/docs`.
 #### Recommendation Page
 ![Recommendation](https://github.com/Devanshu-17/JTP-Technical-Project/assets/93381397/35d64050-c666-4c9d-b17f-e8f169b95894)
 
+#### Search Page
+![Search](https://github.com/Devanshu-17/JTP-Technical-Project/assets/93381397/9c25b653-6ab6-4a08-a393-646448ad0372)
+
 #### Output Page
 ![Output](https://github.com/Devanshu-17/JTP-Technical-Project/assets/93381397/fe71e4cf-1320-4628-8fd8-86501cf2cab9)
 
