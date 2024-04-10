@@ -6,6 +6,3 @@ uvicorn
 pandas
 scikit-learn
 joblib
-mkdocs
-mkdocs-material
-mkdocs-dracula-theme
