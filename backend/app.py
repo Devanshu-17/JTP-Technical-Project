@@ -68,15 +68,6 @@ kmeans = KMeans(n_clusters=5, random_state=2).fit(X)
 # The labels_ attribute contains the cluster assignments for each food item
 df['food_cluster'] = kmeans.labels_
 
-
-# Vectorize the 'food' column
-vectorizer = TfidfVectorizer()
-X = vectorizer.fit_transform(df['food'])
-
-# Clustering with KMeans
-kmeans = KMeans(n_clusters=5, random_state=2).fit(X)
-
-
 # Reduce dimensionality to 2D for visualization
 pca = PCA(n_components=2)
 X_pca = pca.fit_transform(X.toarray())
