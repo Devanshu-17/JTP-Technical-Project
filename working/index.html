@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-        <title>Usage - Foodinator</title>
+        <title>Working - Foodinator</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -80,15 +80,15 @@
                 </a>
             </li>
             <li class="drac-box">
-                <a href="./"
-                    class=" active 
+                <a href="../usage/"
+                    class="
                     drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
                     Usage
                 </a>
             </li>
             <li class="drac-box">
-                <a href="../working/"
-                    class="
+                <a href="./"
+                    class=" active 
                     drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
                     Working
                 </a>
@@ -135,13 +135,13 @@
         <div class="container">
             <div class="row row-preview">
                 <div class="col">
-                    <a href="../installation/"
+                    <a href="../usage/"
                         class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </div>
                 <div class="col">
-                    <a href="../working/"
+                    <a href="../modules/"
                         class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
@@ -178,31 +178,109 @@
             <!-- block content -->
                 <section class="p-md-5 section-content">
     <article>
-        <p><h2 id="working-of-the-system">Working of the System</h2>
+        <p><h1 id="how-does-foodinator-work">How does Foodinator work?</h1>
+<p>Foodinator is a simple web application that allows users to search for food items based on their preferences. </p>
+<h2 id="data-collection">Data Collection</h2>
+<p>The data for Foodinator was collected from the Spoonacular API. The API provides a wide range of food items and their descriptions, ingredients, and nutritional information.</p>
+<p>In order to collect the data, we used the <code>requests</code> library in Python to make HTTP requests to the "Get Recipe Information" endpoint of the Spoonacular API. We then parsed the JSON response and extracted the relevant information such as the food item name, description, ingredients, and nutritional information.</p>
+<p>The data was collected in batches of 50 food items at a time, and we collected a total of 2000 food items for training the machine learning models.</p>
+<p><img alt="api" src="../api.png" /></p>
+<h2 id="data-processing">Data Processing</h2>
+<p>Once we collected the data, we processed it to extract the relevant information and store it in a structured format. We used Python to process the data and store it in a CSV file for easy access.</p>
+<p>This is how the data is structured:</p>
+<p><img alt="Dataset" src="../data.png" /></p>
+<h2 id="machine-learning-models">Machine Learning Model(s)</h2>
+<p>We trained 5 different machine learning models to predict the nutritional information of a food item based on its ingredients. The models we used are:</p>
 <ol>
-<li>
-<p>Open the system in your browser by going to <code>http://localhost:3000</code>.</p>
-</li>
-<li>
-<p>Click on the "Get Started" button to start using the system.</p>
-<p>2.1. If you don't have a clear idea of what you want to eat, then enter your preferences, such as the type of food you like, any allergens you have, and your nutritional requirements.</p>
-<p>2.2. Click on the "Recommend" button to get food recommendations based on your preferences.</p>
-<p>2.3 The system will display a list of recommended food items along with detailed information about each food item.</p>
-</li>
-<li>
-<p>If you have a clear idea of what you want to eat, then click on the "Search" icon and enter the name of the food item you are looking for.</p>
-<p>3.1. The system will display detailed information about the food item you searched for.</p>
-</li>
+<li>K-Means Clustering</li>
+<li>Nearest Neighbors</li>
+<li>K-Nearest Neighbors</li>
+<li>Support Vector Machine</li>
+<li>Neural Network</li>
 </ol>
-<h2 id="implementation">Implementation</h2>
-<h4 id="home-page">Home Page</h4>
-<p><img alt="Home" src="https://github.com/Devanshu-17/JTP-Technical-Project/assets/93381397/7031c2ba-5651-45dc-8af8-46750a4e227e" /></p>
-<h4 id="recommendation-page">Recommendation Page</h4>
-<p><img alt="Recommendation" src="https://github.com/Devanshu-17/JTP-Technical-Project/assets/93381397/35d64050-c666-4c9d-b17f-e8f169b95894" /></p>
-<h4 id="search-page">Search Page</h4>
-<p><img alt="Search" src="https://github.com/Devanshu-17/JTP-Technical-Project/assets/93381397/9c25b653-6ab6-4a08-a393-646448ad0372" /></p>
-<h4 id="output-page">Output Page</h4>
-<p><img alt="Output" src="https://github.com/Devanshu-17/JTP-Technical-Project/assets/93381397/fe71e4cf-1320-4628-8fd8-86501cf2cab9" /></p></p>
+<p>Each model was trained on a subset of the data and evaluated to ensure its accuracy.</p>
+<p>The silhouette score was used to evaluate the performance of the clustering models, while the accuracy score was used for the classification models and the neural network.</p>
+<blockquote>
+<p>Silhouette score is a measure of how similar an object is to its own cluster compared to other clusters. The score ranges from -1 to 1, where a higher value indicates better clustering.</p>
+<p>Accuracy score is the proportion of correct predictions made by the model.</p>
+</blockquote>
+<p>The silhouette score for the <strong>K-Means Clustering</strong> model was <strong>0.014</strong> and for the <strong>K-Nearest Neighbors</strong> model was <strong>0.48</strong>.</p>
+<p>The accuracy score for the <strong>Nearest Neighbors model</strong> was <strong>0.945</strong>, for the <strong>Support Vector Machine</strong> model was <strong>0.68</strong>, and for the <strong>Neural Network model</strong> was <strong>0.72</strong>.</p>
+<p>Based on these scores, we selected the <strong>K-Means Clustering</strong> model as the <strong>best</strong> model for giving recommendations to users based on their preferences.</p>
+<table>
+<thead>
+<tr>
+<th>Machine Learning Model</th>
+<th>Description</th>
+<th>Silhouette Score</th>
+<th>Accuracy Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>K-Means Clustering</td>
+<td>A clustering algorithm used to group similar food items based on their nutritional information.</td>
+<td>0.014</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Nearest Neighbors</td>
+<td>A classification algorithm that predicts nutritional information based on the similarity of food items in the dataset.</td>
+<td>N/A</td>
+<td>0.945</td>
+</tr>
+<tr>
+<td>K-Nearest Neighbors</td>
+<td>A variation of the Nearest Neighbors algorithm that considers the K closest neighbors to predict nutritional information.</td>
+<td>0.48</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Support Vector Machine</td>
+<td>A classification algorithm that separates food items into different classes based on their nutritional features.</td>
+<td>N/A</td>
+<td>0.68</td>
+</tr>
+<tr>
+<td>Neural Network</td>
+<td>A deep learning model used to predict nutritional information by learning patterns and relationships in the data.</td>
+<td>N/A</td>
+<td>0.72</td>
+</tr>
+</tbody>
+</table>
+<h2 id="model-pipeline">Model pipeline</h2>
+<p>The model pipeline consists of the following steps:</p>
+<ul>
+<li>First we convert the food items into a vector representation using the TF-IDF vectorizer.</li>
+<li>Then we apply the K-Means Clustering model to cluster the food items based on their vector representations.</li>
+<li>Next, we filter the food items based on the ingredients provided by the user.</li>
+<li>Finally, we recommend the top 5 food items from the cluster that contains the most similar food items to the user's preferences.</li>
+</ul>
+<h2 id="database">Database</h2>
+<p>Based on the recommended food items, we extract the relevant information such as the food item description, image, ingredients, and instructions from the database and display it to the user.</p>
+<h2 id="recommendation-system">Recommendation System</h2>
+<p>There are two main components of the recommendation system in Foodinator:</p>
+<ul>
+<li>
+<p>The first recommendation system in Foodinator works by taking the user's input in the form of ingredients, Food type, allergies, and dietary restrictions. The system then uses the K-Means Clustering model to cluster the food items based on their vector representations. It then filters the food items based on the user's input and recommends the top 5 food items from the cluster that contains the most similar food items to the user's preferences.</p>
+</li>
+<li>
+<p>The second recommendation system in Foodinator works by taking the user's input in the form of a food item name. The system then uses the cosine similarity metric to find the most similar food items to the user's input and recommends the top 5 food items based on the similarity score.</p>
+</li>
+</ul>
+<h2 id="web-application">Web Application</h2>
+<p>The web application is built using the FastAPI framework in Python. It consists of two main components:</p>
+<ol>
+<li><strong>Home Page</strong>: The home page of the web application gives a brief overview of the application and their functionalities.</li>
+<li><strong>Recommendation Page</strong>: The recommendation page allows users to input their preferences and get recommendations based on their input.</li>
+<li><strong>Output Page</strong>: The output page displays the recommended food items to the user.</li>
+</ol>
+<h3 id="for-more-information-please-refer-to-the-following-sections-of-the-documentation">For more information, please refer to the following sections of the documentation:</h3>
+<h3 id="-modules">- <a href="https://devanshu-17.github.io/JTP-Technical-Project/modules/">Modules</a></h3>
+<h3 id="-api-reference">- <a href="https://devanshu-17.github.io/JTP-Technical-Project/api_docs/">API Reference</a></h3>
+<h3 id="flow-diagram">Flow Diagram</h3>
+<p><img alt="flow diagram" src="../flow.png" /></p></p>
     </article>
 </section>
             <!-- endblock -->
